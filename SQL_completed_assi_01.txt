@@ -1,0 +1,109 @@
+1) Create the table Member, Books and Issue without any constraints as mentioned in the schema description above.
+
+CREATE TABLE members(
+    member_id NUMBER(5) PRIMARY KEY,
+    member_name VARCHAR2(30),
+    member_address VARCHAR2(50),
+    acc_open_date DATE,
+    membership_type VARCHAR2(20),
+    fees_paid NUMBER(4),
+    max_books_allowed NUMBER(2),
+    penalty_amount NUMBER(7,2),
+    CONSTRAINT membership_type_chk CHECK (membership_type IN ('Lifetime', 'Annual','Half Yearly','Quarterly'))
+);
+
+
+CREATE TABLE books (
+   book_no NUMBER(6) PRIMARY KEY,
+   book_name VARCHAR2(30),
+   author_name VARCHAR2(30),
+   cost NUMBER(7,2),
+   category CHAR(10) 
+);
+
+
+CREATE TABLE Issue (
+    Lib_Issue_Id NUMBER(10),
+    Book_No NUMBER(6),
+    Member_Id NUMBER(5),
+    Issue_Date DATE,
+    Return_Date DATE
+);
+
+====================================================================================================================
+
+2) View the structure of the tables.
+
+SQL> DESC members;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ MEMBER_ID                                 NOT NULL NUMBER(5)
+ MEMBER_NAME                               NOT NULL CHAR(20)
+ MEMBER_ADDRESS                                     VARCHAR2(50)
+ ACC_OPEN_DATE                                      DATE
+ MEMBERSHIP_TYPE                                    VARCHAR2(20)
+ FEES_PAID                                          NUMBER(4)
+ MAX_BOOKS_ALLOWED                                  NUMBER(2)
+ PENALTY_AMOUNT                                     NUMBER(7,2)
+
+SQL> DESC books;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BOOK_NO                                   NOT NULL NUMBER(6)
+ BOOK_NAME                                          VARCHAR2(30)
+ AUTHOR_NAME                                        VARCHAR2(30)
+ COST                                               NUMBER(7,2)
+ CATEGORY                                           CHAR(10)
+
+SQL> DESC lib_issue;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ LIB_ISSUE_ID                                       NUMBER(10)
+ BOOK_NO                                            NUMBER(6)
+ MEMBER_ID                                          NUMBER(5)
+ ISSUE_DATE                                         DATE
+ RETURN_DATE                                        DATE
+
+====================================================================================================================
+
+3) Drop the Member table
+SQL> DROP TABLE lib_issue;
+
+Table dropped.
+
+====================================================================================================================
+
+4)	Create the table Member again as per the schema description with the following constraints.
+
+a.	Member_Id – Primary Key
+b.	Membership_type - ‘Lifetime’,’ Annual’, ‘Half Yearly’,’ Quarterly’
+
+====================================================================================================================
+
+CREATE TABLE Issue (
+    Lib_Issue_Id NUMBER(10),
+    Book_No NUMBER(6),
+    Member_Id NUMBER(5),
+    Issue_Date DATE,
+    Return_Date DATE
+);
+
+
+SELECT * FROM issue;
+
+DESC books;
+
+INSERT INTO issue VALUES(114, 101, 200, TO_DATE('18-SEP-2019', 'DD-MON-YYYY'), TO_DATE('19-OCT-2019', 'DD-MON-YYYY'));
+
+DELETE FROM issue WHERE Lib_Issue_Id > 0;
+
+ALTER TABLE issue 
+ADD CONSTRAINT issue_pk PRIMARY KEY (lib_issue_id);
+
+ALTER TABLE issue 
+   ADD CONSTRAINT member_id_fk
+   FOREIGN KEY (book_no)
+   REFERENCES books(book_no);
+
+SELECT * FROM issue;
+

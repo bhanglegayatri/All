@@ -1,0 +1,109 @@
+* Auto encoder
+Explanation of Each Step
+Importing Libraries:
+
+We use pandas for data handling, tensorflow.keras for building the autoencoder, and sklearn for scaling and metrics.
+Dataset Loading and Preprocessing:
+
+The dataset is loaded, and features are separated from labels.
+We normalize features using StandardScaler and create a training set consisting only of normal transactions (non-fraud) to help the model learn normal patterns.
+Encoder Network (Latent Representation):
+
+We define an encoder that reduces input data to a lower-dimensional latent space representation.
+Decoder Network:
+
+The decoder reconstructs the input from the latent representation.
+We use sigmoid in the output layer to match the scaled range of the input features (0 to 1).
+Compile and Train the Model:
+
+The autoencoder model is compiled with the Adam optimizer and trained on the normal data subset.
+We track training and validation loss to monitor model performance.
+Evaluating the Model and Setting the Threshold:
+
+We compute reconstruction errors on the training data to define a threshold for anomaly detection.
+Any transaction in the test set with a reconstruction error higher than this threshold is flagged as an anomaly.
+Model Evaluation and Reporting:
+
+Finally, we evaluate model performance using a confusion matrix and classification report.
+We also plot training and validation loss to check if the model converged well during training.
+
+--------------------------------------------------------------------------------------------------
+CIFAR-10
+Explanation of Each Step
+Importing Necessary Packages:
+
+We import TensorFlow for building and training the model, Matplotlib for plotting, and the CIFAR-10 dataset.
+Loading and Preprocessing the CIFAR-10 Data:
+
+CIFAR-10 dataset contains 60,000 images across 10 classes (6,000 images per class), with images of size 32x32x3 (RGB).
+The images are normalized by dividing by 255.0 to bring pixel values to a range of 0 to 1, which helps the model converge more effectively.
+Defining the Network Architecture:
+
+The model is a simple feedforward neural network (Multi-Layer Perceptron) with three hidden layers.
+Each layer has a different number of neurons: 512, 256, and 128, with ReLU activation functions.
+The final output layer has 10 neurons with softmax activation, which is ideal for multi-class classification tasks like CIFAR-10.
+Training the Model:
+
+We train the model for 20 epochs, using a batch size of 32.
+Adam optimizer is chosen here for faster convergence, but you could also try SGD if you want to experiment with different optimizers.
+Evaluating the Model:
+
+After training, we evaluate the model's performance on the test dataset to determine its accuracy and loss.
+Plotting Training Loss and Accuracy:
+
+Using Matplotlib, we plot training and validation loss and accuracy over epochs to observe the model's performance and check for any signs of overfitting or underfitting.
+This setup should give you a solid understanding of implementing a feedforward neural network for CIFAR-10 classification. Good luck with your practical exam!
+
+------------------------------------------------------------------------------------------------------------
+MNIST
+Explanation of Each Stage
+Loading and Preprocessing the Image Data:
+
+The MNIST dataset is loaded and split into training and testing sets.
+The images are reshaped to include a single channel (28x28x1) since CNNs expect 3D input for each image (height, width, channels).
+Normalization is applied by dividing by 255.0 to bring pixel values between 0 and 1, aiding faster convergence.
+Defining the Model’s Architecture:
+
+We define a CNN architecture with two convolutional layers followed by max-pooling layers.
+The first convolutional layer has 32 filters with a (3x3) kernel, followed by a max-pooling layer of (2x2).
+The second convolutional layer has 64 filters with another max-pooling layer.
+After the convolutional layers, the output is flattened and passed through a fully connected layer with 128 neurons and ReLU activation.
+The output layer has 10 neurons with softmax activation, making it suitable for the 10-class MNIST classification.
+Training the Model:
+
+The model is trained for 10 epochs, and we use the Adam optimizer for more efficient convergence.
+Training and validation data are monitored for accuracy and loss over epochs.
+Estimating the Model’s Performance:
+
+After training, the model’s accuracy and loss on the test set are evaluated.
+Finally, we plot the training and validation loss and accuracy, allowing us to assess the model’s training performance and see if there was any overfitting or underfitting.
+This complete example should help you understand the stages of building a CNN in Keras for MNIST image classification. Best of luck with your deep learning practical exam!
+
+
+------------------------------------------------------------------------------------------------------------
+
+CBOW
+Explanation of Each Step
+Data Preparation:
+
+The input text is preprocessed by converting it to lowercase and tokenizing it into words.
+The Tokenizer class is used to convert words to integer indices, creating a vocabulary of words.
+Generate Training Data:
+
+Context-target pairs are generated using a sliding window of a fixed size (2 in this example).
+Each training sample consists of a set of context words (input) and a target word (output).
+Train Model:
+
+A CBOW model is built using Keras. It consists of:
+An Embedding layer to represent each word with a dense vector.
+A Lambda layer that averages the embeddings of the context words.
+A Dense layer with softmax activation to predict the probability distribution over the vocabulary for the target word.
+The model is compiled with the Adam optimizer and categorical cross-entropy loss, then trained on the generated data.
+Output:
+
+After training, the learned word embeddings can be accessed from the Embedding layer's weights.
+The embeddings for each word in the vocabulary are printed.
+This code provides a straightforward implementation of the CBOW model, demonstrating the process from data preparation through training and retrieving learned embeddings for words in the input text.
+
+
+------------------------------------------------------------------------------------------------------------

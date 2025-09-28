@@ -1,0 +1,582 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Tue Jun 3 23:44:24 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: system
+Enter password:
+Connected.
+SQL> create table emi_employee
+  2  (
+  3      emp_id varchar2(10) primary key,
+  4      name varchar2(50),
+  5      salary number,
+  6      dept_id varchar2(10) references emi_dept(dept_id),
+  7      mngr_id varchar2(10) references emi_employee(emp_id),
+  8      dob date
+  9  );
+    dept_id varchar2(10) references emi_dept(dept_id),
+                                    *
+ERROR at line 6:
+ORA-00942: table or view does not exist
+
+
+SQL> create table emi_dept_mngr
+  2  (
+  3      dept_id varchar2(10) primary key,
+  4      department_manager varchar2(50)
+  5  );
+
+Table created.
+
+SQL> insert into emi_dept_mngr values('d1','John');
+
+1 row created.
+
+SQL> insert into emi_dept_mngr values('d2','Steve');
+
+1 row created.
+
+SQL> insert into emi_dept_mngr values('d3','James');
+
+1 row created.
+
+SQL> insert into emi_dept_mngr values('d4','Mark');
+
+1 row created.
+
+SQL> insert into emi_dept_mngr values('d5','Alex');
+
+1 row created.
+
+SQL> create table emi_country
+  2  (
+  3      c_id number primary key,
+  4      country varchar2(50)
+  5  );
+
+Table created.
+
+SQL> insert into emi_country values(1,'U.K');
+
+1 row created.
+
+SQL> insert into emi_country values(2,'India');
+
+1 row created.
+
+SQL> insert into emi_country values(3,'Bahrain');
+
+1 row created.
+
+SQL> insert into emi_country values(4,'Australia');
+
+1 row created.
+
+SQL>
+SQL> create table emi_dept
+  2  (
+  3      dept_id varchar2(10) primary key,
+  4      department varchar2(50),
+  5      c_id number references emi_country(c_id)
+  6  );
+
+Table created.
+
+SQL> insert into emi_dept values('d1','HR',1);
+
+1 row created.
+
+SQL> insert into emi_dept values('d2','Admin',2);
+
+1 row created.
+
+SQL> insert into emi_dept values('d3','Finance',3);
+
+1 row created.
+
+SQL> insert into emi_dept values('d4','Technical',4);
+
+1 row created.
+
+SQL> insert into emi_dept values('d5','R and D',1);
+
+1 row created.
+
+SQL> create table emi_employee
+  2  (
+  3      emp_id varchar2(10) primary key,
+  4      name varchar2(50),
+  5      salary number,
+  6      dept_id varchar2(10) references emi_dept(dept_id),
+  7      mngr_id varchar2(10) references emi_employee(emp_id),
+  8      dob date
+  9  );
+
+Table created.
+
+SQL>
+SQL> insert into emi_employee values('e1','Arjun',25000,'d1','e3',to_date('1982-01-11','yyyy-mm-dd'));
+insert into emi_employee values('e1','Arjun',25000,'d1','e3',to_date('1982-01-11','yyyy-mm-dd'))
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C004459) violated - parent key not
+found
+
+
+SQL> insert into emi_employee values('e2','Ted',12000,'d2','e3',to_date('1976-07-21','yyyy-mm-dd'));
+insert into emi_employee values('e2','Ted',12000,'d2','e3',to_date('1976-07-21','yyyy-mm-dd'))
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C004459) violated - parent key not
+found
+
+
+SQL> insert into emi_employee values('e3','Apurv',20000,'d3','e4',to_date('1978-05-28','yyyy-mm-dd'));
+insert into emi_employee values('e3','Apurv',20000,'d3','e4',to_date('1978-05-28','yyyy-mm-dd'))
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C004459) violated - parent key not
+found
+
+
+SQL> insert into emi_employee values('e4','Manpreet',25000,'d1','e6',to_date('1979-11-14','yyyy-mm-dd'));
+insert into emi_employee values('e4','Manpreet',25000,'d1','e6',to_date('1979-11-14','yyyy-mm-dd'))
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C004459) violated - parent key not
+found
+
+
+SQL> insert into emi_employee values('e5','Dharamveer',34000,'d1','e6',to_date('1982-01-15','yyyy-mm-dd'));
+insert into emi_employee values('e5','Dharamveer',34000,'d1','e6',to_date('1982-01-15','yyyy-mm-dd'))
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C004459) violated - parent key not
+found
+
+
+SQL> insert into emi_employee values('e6','Nitish',23000,'d3','e7',to_date('1980-12-09','yyyy-mm-dd'));
+insert into emi_employee values('e6','Nitish',23000,'d3','e7',to_date('1980-12-09','yyyy-mm-dd'))
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C004459) violated - parent key not
+found
+
+
+SQL> insert into emi_employee values('e7','Saurabh',67000,'d4',null,to_date('1978-03-04','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into emi_employee values('e8','Nitish',23000,'d3','e7',to_date('1980-12-09','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> delete from emi_employee where emp_id = 'e8';
+
+1 row deleted.
+
+SQL> insert into emi_employee values('e6','Nitish',23000,'d3','e7',to_date('1980-12-09','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into emi_employee values('e4','Manpreet',25000,'d1','e6',to_date('1979-11-14','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into emi_employee values('e5','Dharamveer',34000,'d1','e6',to_date('1982-01-15','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into emi_employee values('e3','Apurv',20000,'d3','e4',to_date('1978-05-28','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into emi_employee values('e1','Arjun',25000,'d1','e3',to_date('1982-01-11','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into emi_employee values('e2','Ted',12000,'d2','e3',to_date('1976-07-21','yyyy-mm-dd'));
+
+1 row created.
+
+SQL>
+
+
+// Display name of Employees, Department, Country, and department manager for all employees.
+Select 
+     e.Name AS Employee, 
+     d.department, 
+     c.country, 
+     m.Name AS Manager 
+FROM emi_employee e
+JOIN emi_Dept d ON e.dept_id = d.dept_id
+JOIN emi_country c ON d.c_id = c.c_id
+LEFT JOIN emi_employee m ON e.mngr_id = m.emp_id;
+
+
+// Display Manager of the Employee
+Select 
+     e.Name As Employee, 
+     m.Name AS Manager
+FROM emi_employee e
+JOIN emi_employee m ON m.emp_id = e.mngr_id;
+
+// Get the total salary paid in each department.
+SELECT 
+     d.Department, SUM(e.Salary) AS Total_Salary_Paid
+from 
+     Emi_employee e
+RIGHT JOIN 
+     emi_Dept d ON e.dept_id = d.dept_id
+GROUP BY 
+     d.Department
+ORDER BY 
+     Total_Salary_Paid;
+
+// Get the Total no of employees in each department
+SELECT 
+     d.Department, COUNT(emp_id) AS No_of_Employees
+from 
+     Emi_employee e
+RIGHT JOIN 
+     emi_Dept d ON e.dept_id = d.dept_id
+GROUP BY 
+     d.Department
+ORDER BY 
+     No_of_Employees;
+
+// Show the average salary per department.
+SELECT 
+     d.Department, AVG(e.Salary) AS Avg_Salary
+from 
+     Emi_employee e
+RIGHT JOIN 
+     emi_Dept d ON e.dept_id = d.denopt_id
+GROUP BY 
+     d.Department;
+
+---------------------------------------------------------------------------------------------
+
+// Get the minimum and maximum salary per department, but only for departments having more than 2 employees.
+
+SELECT 
+     d.department, MIN(e.Salary) AS Min_Salary, MAX(e.Salary) AS Max_Salary
+FROM 
+    Emi_employee e
+JOIN 
+    Emi_Dept d ON e.dept_id = d.dept_id
+GROUP BY 
+     d.Department
+HAVING 
+     COUNT(e.emp_id) > 2;
+
+select emp_id not in mngr_id from emi_employee;
+
+
+-----------------------------------------------------------------------------------------------------------------
+*****************************************************************************************************************
+
+//Find departments where the average salary is more than 20000.
+SELECT 
+    d.department, 
+    AVG(e.salary) AS Avg_Salary
+FROM 
+    emi_dept d
+JOIN 
+    emi_employee e ON d.dept_id = e.dept_id
+GROUP BY 
+    d.department
+HAVING 
+    AVG(e.salary) > 20000
+ORDER BY 
+    AVG(e.salary);
+
+
+// Display the departments which have more than one employee drawing salary above 25000.
+
+SELECT 
+      department
+FROM (
+     SELECT 
+           d.Department, COUNT(*) AS high_Salary_Dept
+     FROM 
+         emi_dept d
+     JOIN 
+         Emi_employee e ON d.dept_id = e.dept_id
+     WHERE 
+          e.salary > 25000
+     GROUP BY 
+           d.department
+) High_Sal_Department
+WHERE 
+    high_salary_Dept > 1;
+ 
+Approach 2: 
+-----------
+SELECT 
+    d.department
+FROM 
+    emi_dept d
+JOIN 
+    emi_employee e ON e.dept_id = d.dept_id
+WHERE 
+    e.salary > 25000
+GROUP BY 
+    d.department
+HAVING 
+    COUNT(e.emp_id) > 1;
+
+-----------------------------------------------------------------------------------------------------------
+// List all managers (mngr_id) managing more than 2 employees, using GROUP BY.
+
+SELECT 
+     mngr_id ManagerId
+FROM (
+     SELECT 
+           e.mngr_id, COUNT(e.emp_id) emp_count
+     FROM 
+         emi_employee e
+     GROUP BY 
+          e.mngr_id
+      HAVING 
+          COUNT(e.emp_id) > 1  
+) Manager_id
+ORDER BY
+     ManagerId;
+
+--------------------------------------------------------------------------------------------------
+SELECT 
+      department
+FROM (
+     SELECT 
+           d.Department, COUNT(*) AS high_Salary_Dept
+     FROM 
+         emi_dept d
+     JOIN 
+         Emi_employee e ON d.dept_id = e.dept_id
+     WHERE 
+          e.salary > 25000
+     GROUP BY 
+           d.department
+) High_Sal_Department
+WHERE 
+    high_salary_Dept > 1;
+
+
+SELECT d.Dept
+FROM emi_Dept d
+JOIN emi_employee e 
+ON e.dept_id = d.dept_id
+WHERE 
+     (SELECT COUNT(e.emp_id) FROM emi_employee e HAVING COUNT(e.emp_id) > 1)
+AND
+e.Salary > 25000;
+
+SELECT d.department FROM emi_dept d, Department_Salary(
+    SELECT d.department, COUNT(e.emp_id) emp_count
+    FROM emi_dept d, emi_employee e
+    WHERE e.dept_id = d.dept_id AND e.Salary > 25000
+    GROUP BY d.department
+)Department_Salary
+WHERE d.dept_id = Department_Salary.dept_id;
+
+
+SELECT d.department FROM emi_dept d,
+Department_salary.emp_count,
+(SELECT d.department, 
+d.dept_id,
+COUNT(e.emp_id) emp_count
+    FROM emi_dept d, emi_employee e
+    WHERE e.dept_id = d.dept_id AND e.Salary > 25000
+GROUP BY d.department,
+d.dept_id
+)Department_Salary
+
+WHERE 
+d.dept_id = Department_Salary.dept_id AND 
+Department_salary.emp_count > 1;
+
+
+
+SELECT d.department FROM emi_dept d,(
+    SELECT d.department, 
+           d.dept_id,
+    COUNT(e.emp_id) emp_count
+    FROM emi_dept d, emi_employee e
+    WHERE e.dept_id = d.dept_id AND e.Salary > 25000
+    GROUP BY d.department, d.dept_id
+    HAVING COUNT(e.emp_id) > 1
+)Department_Salary
+WHERE 
+d.dept_id = Department_Salary.dept_id;
+
+
+SELECT 
+    d.department
+FROM 
+    emi_dept d
+JOIN 
+    emi_employee e ON e.dept_id = d.dept_id
+WHERE 
+    e.salary > 25000
+GROUP BY 
+    d.department
+HAVING 
+    COUNT(e.emp_id) > 1;
+
+SELECT *
+FROM (
+    SELECT 
+        d.department, COUNT(*) AS high_salary_emps
+    FROM 
+        emi_dept d, emi_employee e
+    WHERE
+        d.dept_id = e.dept_id
+    AND
+        e.salary >= 25000
+    GROUP BY 
+        d.department
+) dept_salary_count
+WHERE high_salary_emps > 1;
+
+
+SELECT department
+FROM emi_dept, (
+  SELECT d.department, COUNT(*) High_Count_Emps
+  FROM emi_dept d, emi_employee e
+  WHERE e.dept_id = d.dept_id AND e.Salary > 25000
+  GROUP BY d.department
+  HAVING COUNT(e.emp_id) > 1
+);
+
+
+----------------------------------------------------------------------------------------------------------------
+// Q3.  Display name of Department Managers of employees who are not managers.
+
+SELECT DISTINCT
+     dm.department_manager
+FROM 
+    emi_employee e
+JOIN 
+    emi_dept d ON e.dept_id = d.dept_id
+JOIN
+    emi_dept_mngr dm ON d.dept_id = dm.dept_id
+WHERE 
+     emp_id 
+NOT IN(
+     SELECT 
+           DISTINCT mngr_id 
+           FROM 
+               emi_employee 
+           WHERE 
+                mngr_id IS NOT NULL
+)
+--------------------------------------------------------------------------------------------------------
+Q3. Display number of employees and average of salary for each country.
+
+
+
+--------------------------------------------------------------------------------------------------------
+
+SELECT
+      Country
+FROM 
+    Emi_Country ,(
+    SELECT 
+         COUNT(e.emp_id), AVG(e.SALARY)
+    FROM 
+          Emi_employee e 
+    JOIN 
+         Emi_dept d ON e.dept_id = d.dept_id
+    JOIN 
+         Emi_Country c ON d.c_id = c.c_id
+    GROUP BY 
+         e.dept_id
+ ) Count_Avg_Salary_PerCountry
+GROUP BY Country;
+
+
+
+SELECT c.country, AVG(e.SALARY), COUNT(e.emp_id)
+FROM Emi_employee e 
+JOIN Emi_dept d ON e.dept_id = d.dept_id
+JOIN emi_country c ON d.c_id = c.c_id
+GROUP BY e.dept_id, c.country; 
+
+SELECT CEIL(12.90) ABS FROM DUAL;
+SELECT RAND() ;
+
+Select Name, MAX(salary) from emi_employee
+GROUP BY Name;
+
+
+SELECT * FROM EMI_EMPLOYEE;
+SELECT * FROM 
+
+SELECT 
+    Name, Salary
+FROM 
+    Emi_Employee
+WHERE 
+    Salary = (SELECT salary FROM emi_employee WHERE dept_id = 'd1');
+
+UPDATE 
+      Emi_Employee e
+SET 
+      e.Salary = e.Salary * 1.25
+WHERE 
+      e.dept_id 
+IN (
+      SELECT Dept_id 
+      FROM Emi_dept 
+      WHERE Department = 'Technical');
+
+
+SELECT 
+     name, dept_id
+ 
+
+SELECT Salary
+FROM (
+     SELECT Salary, DENSE_RANK() OVER (ORDER BY Salary DESC) AS rnk
+     FROM Emi_Employee
+) ranked
+WHERE rnk = 2;
+
+
+SELECT MAX(salary) AS second_highest
+FROM emi_employee
+WHERE salary < (
+    SELECT MAX(salary) FROM emi_employee
+);
+
+SELECT Name, Salary,
+  ROW_NUMBER() OVER (ORDER BY Salary DESC) AS RowNum,
+  RANK()       OVER (ORDER BY Salary DESC) AS RankNum,
+  DENSE_RANK() OVER (ORDER BY Salary DESC) AS DenseRankNum
+FROM emi_employee;
+
+SELECT 
+    name, 
+    salary,
+    ROW_NUMBER() OVER (ORDER BY salary DESC) AS RowNum,
+    RANK()       OVER (ORDER BY salary DESC) AS Ranked,
+    DENSE_RANK() OVER (ORDER BY salary DESC) AS DenseRank
+FROM emi_employee;
+
+SELECT * FROM (
+  SELECT name, salary, RANK() OVER (ORDER BY salary DESC) AS rnk
+  FROM emi_employee
+) WHERE rnk <= 3;
+
+
+
+
+ 
+
+
+
+
+When you explain something, I need it softly, with encouragement, not like I’m in a class being graded. I start feeling irritated not because I don’t want to learn, but because I feel you’re judging me or not being gentle. I am learning. Not knowing something doesn’t make me dumb. It makes me curious.

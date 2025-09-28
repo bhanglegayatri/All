@@ -1,0 +1,46 @@
+ms office details
+
+mail id-gayatribhangle123@outlook.com
+
+password-office2020
+
+Oracle password-gayatrisys
+
+Ubuntu: 
+Name: Ubuntu
+user name: ubuntu123
+passowrd: - User123
+
+Oracle cloud:
+mail id- gayatribhangle18@gmail.com
+pass:- Bh@ngle_30
+
+project.assist.experts@gmail.om
+Fortunate@10
+
+CREATE USER lost_found IDENTIFIED BY If_pass;
+GRANT ALL PRIVILEGES TO lost_found;
+
+SQL> CONNECT lost_found/If_pass@localhost:1521/xe;
+Connected.
+SQL>
+
+Mongodb Atlas: Fortunate10 
+
+Docker username: Gayatri3018
+Pass: Fortunate@3018
+
+WSL terminal/ Ubuntu
+username: gayatri
+password: gayatri30
+
+Kaveri DSD pass:
+Honey@25
+DSD25107317
+
+
+CET: Honey@2007
+
+
+Postgres superuser
+BeePostgres18
